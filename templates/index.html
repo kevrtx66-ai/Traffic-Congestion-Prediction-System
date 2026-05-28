@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Congestion Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div id="controls">
+        <h2>Traffic Congestion Map</h2>
+        <div class="top-nav-box">
+            <div class="chip-row">
+                <button id="locate-me-btn" type="button" class="chip chip-primary">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3L13.8 8.2L19 10L13.8 11.8L12 17L10.2 11.8L5 10L10.2 8.2L12 3Z"></path>
+                    </svg>
+                    <span>Current Location</span>
+                </button>
+                <button id="set-start-btn" type="button" class="chip">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C8.7 2 6 4.7 6 8C6 12.4 12 20 12 20S18 12.4 18 8C18 4.7 15.3 2 12 2ZM12 10.5C10.6 10.5 9.5 9.4 9.5 8C9.5 6.6 10.6 5.5 12 5.5C13.4 5.5 14.5 6.6 14.5 8C14.5 9.4 13.4 10.5 12 10.5Z"></path>
+                    </svg>
+                    <span>Set Source on Map</span>
+                </button>
+                <button id="set-end-btn" type="button" class="chip">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 3V21M7 4H16L14.5 7L16 10H7"></path>
+                    </svg>
+                    <span>Set Destination on Map</span>
+                </button>
+                <button id="draw-route-btn" type="button" class="chip chip-accent">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 18C8.7 18 10 16.7 10 15S8.7 12 7 12S4 13.3 4 15S5.3 18 7 18ZM17 12C18.7 12 20 10.7 20 9S18.7 6 17 6S14 7.3 14 9S15.3 12 17 12ZM9.5 14.2L14.5 9.8"></path>
+                    </svg>
+                    <span>Find Shortest Route</span>
+                </button>
+                <button id="clear-route-btn" type="button" class="chip">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 6H21M8 6V4H16V6M9 6V19M15 6V19M5 6L6 20H18L19 6"></path>
+                    </svg>
+                    <span>Clear</span>
+                </button>
+                <select id="time-window" class="chip-select" aria-label="Forecast window">
+                    <option value="1">1H Forecast</option>
+                    <option value="6">6H Forecast</option>
+                    <option value="12">12H Forecast</option>
+                    <option value="24">24H Forecast</option>
+                </select>
+                <button id="refresh-btn" class="chip chip-refresh">Refresh</button>
+            </div>
+            <div class="route-input-row">
+                <input id="start-place" type="text" placeholder="Enter source location" />
+                <button id="find-start-btn" type="button" class="chip chip-mini">Find Source</button>
+                <input id="end-place" type="text" placeholder="Enter destination location" />
+                <button id="find-end-btn" type="button" class="chip chip-mini">Find Destination</button>
+            </div>
+            <div id="route-status" aria-live="polite">Route: Click "Set Source on Map" then click map.</div>
+        </div>
+        <div id="update-status" aria-live="polite">Last updated: Never</div>
+    </div>
+    
+    <div id="map"></div>
+    <aside id="route-panel" class="route-panel" aria-live="polite" aria-hidden="true">
+        <div class="route-panel-header">
+            <h3>Route Options</h3>
+            <button id="close-route-panel-btn" type="button" aria-label="Close route panel">X</button>
+        </div>
+        <p class="route-panel-note">Estimated time (no live traffic)</p>
+        <div id="route-list" class="route-list"></div>
+    </aside>
+    
+    <div id="chart-container" class="chart-medium" aria-live="polite">
+        <div class="chart-header">
+            <h3>Congestion Trend</h3>
+            <button id="toggle-chart-size-btn" type="button" aria-expanded="false">Expand</button>
+        </div>
+        <div class="chart-body">
+            <canvas id="congestion-chart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>

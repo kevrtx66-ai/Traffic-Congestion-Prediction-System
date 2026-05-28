@@ -1,0 +1,13 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\Home-Desktop\AppData\Local\Programs\Python\Python314\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Home-Desktop\Documents\Project_2
+collecting ... collected 5 items
+
+tests/integration/test_api.py::TestAPIEndpoints::test_health_endpoint_returns_ok PASSED [ 20%]
+tests/integration/test_api.py::TestAPIEndpoints::test_predict_valid_request PASSED [ 40%]
+tests/integration/test_api.py::TestAPIEndpoints::test_predict_missing_fields PASSED [ 60%]
+tests/integration/test_api.py::TestAPIEndpoints::test_predict_invalid_coordinates PASSED [ 80%]
+tests/integration/test_api.py::TestAPIEndpoints::test_predict_invalid_timestamp PASSED [100%]
+
+============================== 5 passed in 0.14s ==============================
