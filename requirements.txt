@@ -1,6 +1,11 @@
 Flask>=2.3.0
-numpy>=1.24.0
-pandas>=2.0.0
-scikit-learn>=1.2.0
-gunicorn>=21.0.0
+Flask-Cors>=4.0.0
 Werkzeug>=2.3.0
+
+# ML/data stack (used for prediction and first-run model bootstrap training)
+numpy>=1.26.0
+pandas>=2.2.0
+scikit-learn>=1.5.0
+
+# Production WSGI server (non-Windows deployments)
+gunicorn>=21.0.0; platform_system != "Windows"

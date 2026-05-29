@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traffic Congestion Map</title>
+    <title>Traffic Congestion Intelligence</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-    <div id="controls">
-        <h2>Traffic Congestion Map</h2>
-        <div class="top-nav-box">
-            <div class="chip-row">
-                <button id="locate-me-btn" type="button" class="chip chip-primary">
+    <div class="app-shell">
+        <header id="controls" class="top-controls glass-card">
+            <div class="title-row">
+                <div>
+                    <h1>Traffic Congestion Intelligence</h1>
+                    <p class="subtitle">Route-aware analytics with ML congestion prediction</p>
+                </div>
+                <div id="update-status" aria-live="polite" class="status-pill">Last updated: Never</div>
+            </div>
+
+            <div class="control-group">
+                <div class="chip-row">
+                    <button id="locate-me-btn" type="button" class="chip chip-primary">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 3L13.8 8.2L19 10L13.8 11.8L12 17L10.2 11.8L5 10L10.2 8.2L12 3Z"></path>
                     </svg>
@@ -48,41 +56,64 @@
                     <option value="12">12H Forecast</option>
                     <option value="24">24H Forecast</option>
                 </select>
-                <button id="refresh-btn" class="chip chip-refresh">Refresh</button>
+                    <label id="view-mode-control" class="view-mode-control" for="congestion-view-toggle">
+                        <span class="view-mode-label">Normal</span>
+                        <input
+                            id="congestion-view-toggle"
+                            type="checkbox"
+                            role="switch"
+                            aria-label="Toggle congestion route view"
+                            checked
+                        />
+                        <span class="view-mode-switch" aria-hidden="true">
+                            <span class="view-mode-thumb"></span>
+                        </span>
+                        <span class="view-mode-label">Congestion</span>
+                    </label>
+                    <button id="refresh-btn" class="chip chip-refresh">Refresh</button>
+                </div>
+
+                <div class="route-input-row">
+                    <input id="start-place" type="text" placeholder="Enter source location" />
+                    <button id="find-start-btn" type="button" class="chip chip-mini">Find Source</button>
+                    <input id="end-place" type="text" placeholder="Enter destination location" />
+                    <button id="find-end-btn" type="button" class="chip chip-mini">Find Destination</button>
+                </div>
+
+                <div id="route-status" class="route-status" aria-live="polite">
+                    Route: Click "Set Source on Map" then click map.
+                </div>
             </div>
-            <div class="route-input-row">
-                <input id="start-place" type="text" placeholder="Enter source location" />
-                <button id="find-start-btn" type="button" class="chip chip-mini">Find Source</button>
-                <input id="end-place" type="text" placeholder="Enter destination location" />
-                <button id="find-end-btn" type="button" class="chip chip-mini">Find Destination</button>
-            </div>
-            <div id="route-status" aria-live="polite">Route: Click "Set Source on Map" then click map.</div>
-        </div>
-        <div id="update-status" aria-live="polite">Last updated: Never</div>
-    </div>
-    
-    <div id="map"></div>
-    <aside id="route-panel" class="route-panel" aria-live="polite" aria-hidden="true">
-        <div class="route-panel-header">
-            <h3>Route Options</h3>
-            <button id="close-route-panel-btn" type="button" aria-label="Close route panel">X</button>
-        </div>
-        <p class="route-panel-note">Estimated time (no live traffic)</p>
-        <div id="route-list" class="route-list"></div>
-    </aside>
-    
-    <div id="chart-container" class="chart-medium" aria-live="polite">
-        <div class="chart-header">
-            <h3>Congestion Trend</h3>
-            <button id="toggle-chart-size-btn" type="button" aria-expanded="false">Expand</button>
-        </div>
-        <div class="chart-body">
-            <canvas id="congestion-chart"></canvas>
-        </div>
+        </header>
+
+        <main class="map-shell">
+            <section class="map-stage">
+                <div id="map"></div>
+
+                <aside id="route-panel" class="route-panel glass-card" aria-live="polite" aria-hidden="true">
+                    <div class="route-panel-header">
+                        <h3>Route Options</h3>
+                        <button id="close-route-panel-btn" type="button" aria-label="Close route panel">Close</button>
+                    </div>
+                    <p class="route-panel-note">Estimated time and ML-adjusted traffic delay</p>
+                    <div id="route-list" class="route-list"></div>
+                </aside>
+
+                <div id="chart-container" class="chart-medium glass-card" aria-live="polite">
+                    <div class="chart-header">
+                        <h3>Congestion Trend</h3>
+                        <button id="toggle-chart-size-btn" type="button" aria-expanded="false">Expand</button>
+                    </div>
+                    <div class="chart-body">
+                        <canvas id="congestion-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/static/app.js"></script>
+    <script type="module" src="/static/js/main.js"></script>
 </body>
 </html>
